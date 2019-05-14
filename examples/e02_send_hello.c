@@ -2,6 +2,7 @@
 #include "cclient/api/extended/extended_api.h"
 #include "cclient/types/types.h"
 #include "common/trinary/tryte_ascii.h"
+#include "utils/time.h"
 #include <inttypes.h>
 
 //Todo: If needed, replace it with your node configuration
@@ -61,7 +62,7 @@ static void init_iota_client(iota_client_service_t *const service)
 retcode_t send_transaction(iota_client_service_t *service){
     retcode_t ret = RC_ERROR;
     char test_data[] = "You did it!";
-    uint64_t timestamp = 0;
+    uint64_t timestamp = current_timestamp_ms();
 
     flex_trit_t address[FLEX_TRIT_SIZE_243];
     flex_trits_from_trytes(address, NUM_TRITS_ADDRESS, (tryte_t *)ADDRESS, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS);
