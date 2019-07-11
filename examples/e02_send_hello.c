@@ -70,8 +70,8 @@ retcode_t send_transaction(iota_client_service_t *service){
 
     char message[] = "You did it!";
 
-    int depth = 6;
-    int mwm = 9;
+    int depth = 9;
+    int mwm = 14;
     uint8_t security = 2;
     bundle_transactions_t *bundle = NULL;
     bundle_transactions_new(&bundle);
