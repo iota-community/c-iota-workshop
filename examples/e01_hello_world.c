@@ -1,6 +1,6 @@
 #include "cclient/api/core/core_api.h"
 #include "cclient/api/extended/extended_api.h"
-#include "cclient/types/types.h"
+
 #include <inttypes.h>
 
 //Todo: If needed, replace it with your node configuration

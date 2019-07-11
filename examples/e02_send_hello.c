@@ -1,14 +1,14 @@
 #include "cclient/api/core/core_api.h"
 #include "cclient/api/extended/extended_api.h"
-#include "cclient/types/types.h"
+
 #include "common/trinary/tryte_ascii.h"
 #include "utils/time.h"
 #include <inttypes.h>
 
 //Todo: If needed, replace it with your node configuration
-#define CONFIG_IRI_NODE_URI "nodes.thetangle.org"
-#define CONFIG_IRI_NODE_PORT 443
-#define CONFIG_ENABLE_HTTPS true
+#define CONFIG_IRI_NODE_URI "185.244.195.45"
+#define CONFIG_IRI_NODE_PORT 14265
+//#define CONFIG_ENABLE_HTTPS true
 
 //Todo: If needed, replace with your valid SSL certificate
 static char const *ssl_certificate_pem =
@@ -38,8 +38,14 @@ static char const *ssl_certificate_pem =
 #define MINIMUM_WEIGHT_MAGNITUDE 13
 #define DO_LOCAL_POW false
 
-#define ADDRESS "TOKLOARHKXQCVPPVVIPIJGLUTLTKFHYGMBBLOXJFYGSARLOTYFFSDZNYCOBOCNPGRMJWZCQBNOROUCE9G"
-#define TAG "HELLOWORLD"
+static tryte_t const *const SEED =
+        (tryte_t *)"G9JEMIRJKUXDKUPPAIMEQSGVADYLSJRSBTEIRDWSCTLCVQOJWBM9XESTWTSONOTDDQUXMYCNVAKZWPPYW";
+
+static tryte_t const *const RECEIVER_ADDR =
+(tryte_t *)"TOKLOARHKXQCVPPVVIPIJGLUTLTKFHYGMBBLOXJFYGSARLOTYFFSDZNYCOBOCNPGRMJWZCQBNOROUCE9G";
+
+static tryte_t const *const TAG =
+        (tryte_t *)"HELLOWORLD99999999999999999";
 
 static void init_iota_client(iota_client_service_t *const service)
 {
@@ -60,35 +66,46 @@ static void init_iota_client(iota_client_service_t *const service)
 }
 
 retcode_t send_transaction(iota_client_service_t *service){
-    retcode_t ret = RC_ERROR;
-    char test_data[] = "You did it!";
-    uint64_t timestamp = current_timestamp_ms();
+    retcode_t ret_code = RC_OK;
 
-    flex_trit_t address[FLEX_TRIT_SIZE_243];
-    flex_trits_from_trytes(address, NUM_TRITS_ADDRESS, (tryte_t *)ADDRESS, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS);
+    char message[] = "You did it!";
 
-    flex_trit_t tag[FLEX_TRIT_SIZE_81];
-    flex_trits_from_trytes(tag, NUM_TRITS_TAG, (tryte_t *)TAG, NUM_TRYTES_TAG, NUM_TRYTES_TAG);
-
-
-    tryte_t data_trytes[NUM_TRYTES_ADDRESS];
-    ascii_to_trytes(test_data, data_trytes);
-
-    flex_trit_t data[FLEX_TRIT_SIZE_243];
-    flex_trits_from_trytes(data, NUM_TRITS_ADDRESS, data_trytes, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS);
-
-    transfer_t *transfer = transfer_data_new(address, tag, data, NUM_TRITS_ADDRESS, timestamp);
-    transfer_t *transfers[1] = {transfer};
-    uint32_t num_transfer = 1;
-
+    int depth = 6;
+    int mwm = 9;
+    uint8_t security = 2;
     bundle_transactions_t *bundle = NULL;
     bundle_transactions_new(&bundle);
+    transfer_array_t *transfers = transfer_array_new();
 
-    ret = iota_client_send_transfer(
-            service, TIP_SELECTION_DEPTH, MINIMUM_WEIGHT_MAGNITUDE,
-            DO_LOCAL_POW, transfers, num_transfer, NULL, bundle);
+    transfer_t tf = {};
 
-    return ret;
+    flex_trit_t seed[NUM_FLEX_TRITS_ADDRESS];
+    flex_trits_from_trytes(seed, NUM_TRITS_ADDRESS, SEED, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS);
+
+    flex_trits_from_trytes(tf.address, NUM_TRITS_ADDRESS, RECEIVER_ADDR, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS);
+
+    flex_trits_from_trytes(tf.tag, NUM_TRITS_TAG, (const tryte_t *)TAG, NUM_TRYTES_TAG,
+                           NUM_TRYTES_TAG);
+
+    transfer_message_set_string(&tf, message);
+
+    transfer_array_add(transfers, &tf);
+    ret_code = iota_client_send_transfer(
+            service, seed, security, depth, mwm, false, transfers, NULL, NULL, NULL, bundle);
+
+    printf("send transfer %s\n", error_2_string(ret_code));
+    if (ret_code == RC_OK) {
+        flex_trit_t const *bundle_hash = bundle_transactions_bundle_hash(bundle);
+        printf("bundle hash: ");
+        flex_trit_print(bundle_hash, NUM_TRITS_HASH);
+        printf("\n");
+    }
+
+    bundle_transactions_free(&bundle);
+    transfer_message_free(&tf);
+    transfer_array_free(transfers);
+
+    return ret_code;
 }
 
 int main(void){
