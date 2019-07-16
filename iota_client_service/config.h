@@ -37,4 +37,7 @@
 #define DO_LOCAL_POW false
 #define SECURITY_LEVEL 2
 
+//Comment for debugging
+#define DEBUG
+
 #endif //C_IOTA_WORKSHOP_CONFIG_H

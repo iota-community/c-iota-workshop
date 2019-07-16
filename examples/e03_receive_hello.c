@@ -21,13 +21,17 @@ retcode_t find_transaction(iota_client_service_t *s, tryte_t const *const addres
         goto done;
     }
 
-    flex_trit_t tmp_hash[FLEX_TRIT_SIZE_243];
-    if (flex_trits_from_trytes(tmp_hash, NUM_TRITS_HASH, address, NUM_TRYTES_HASH, NUM_TRYTES_HASH) == 0) {
+    flex_trit_t hash[FLEX_TRIT_SIZE_243];
+
+    //Converting address char trytes to trits
+    //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
+    if (flex_trits_from_trytes(hash, NUM_TRITS_HASH, address, NUM_TRYTES_HASH, NUM_TRYTES_HASH) == 0) {
         printf("Error: converting flex_trit failed.\n");
         goto done;
     }
 
-    if ((ret_code = hash243_queue_push(&find_tran->addresses, tmp_hash)) != RC_OK) {
+    //Add transaction address hash trits to find_transactions_req_t
+    if ((ret_code = hash243_queue_push(&find_tran->addresses, hash)) != RC_OK) {
         printf("Error: push queue %s\n", error_2_string(ret_code));
         goto done;
     }

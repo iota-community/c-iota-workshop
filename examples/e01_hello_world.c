@@ -14,6 +14,9 @@ retcode_t get_iota_node_info(iota_client_service_t *iota_client_service, get_nod
     if (ret == RC_OK) {
         printf("appName %s \n", node_response->app_name->data);
         printf("appVersion %s \n", node_response->app_version->data);
+
+        //Converting returned latest_milestone trits to tryte chars
+        //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
         trits_count = flex_trits_to_trytes(trytes_out, NUM_TRYTES_HASH,
                                            node_response->latest_milestone, NUM_TRITS_HASH,
                                            NUM_TRITS_HASH);
@@ -24,18 +27,7 @@ retcode_t get_iota_node_info(iota_client_service_t *iota_client_service, get_nod
         trytes_out[NUM_TRYTES_HASH] = '\0';
         printf("latestMilestone %s \n", trytes_out);
         printf("latestMilestoneIndex %u\n", (uint32_t) node_response->latest_milestone_index);
-        trits_count = flex_trits_to_trytes(trytes_out, NUM_TRYTES_HASH,
-                                           node_response->latest_milestone, NUM_TRITS_HASH,
-                                           NUM_TRITS_HASH);
-        if (trits_count == 0) {
-            printf("trit converting failed\n");
-            goto done;
-        }
-        trytes_out[NUM_TRYTES_HASH] = '\0';
-        printf("latestSolidSubtangleMilestone %s \n", trytes_out);
 
-        printf("latestSolidSubtangleMilestoneIndex %u\n",
-               node_response->latest_solid_subtangle_milestone_index);
         printf("milestoneStratIndex %u\n", node_response->milestone_start_index);
         printf("neighbors %d \n", node_response->neighbors);
         printf("packetsQueueSize %d \n", node_response->packets_queue_size);

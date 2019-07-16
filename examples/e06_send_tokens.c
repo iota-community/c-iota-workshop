@@ -22,7 +22,7 @@ retcode_t send_balance(iota_client_service_t *s) {
     bundle_transactions_new(&bundle);
     transfer_array_t *transfers = transfer_array_new();
 
-    /* transfer setup */
+    // transfer setup
     transfer_t tf = {};
     // seed
     flex_trit_t seed[NUM_FLEX_TRITS_ADDRESS];
@@ -50,6 +50,8 @@ retcode_t send_balance(iota_client_service_t *s) {
   };
 
   // address of the input
+  //Fixme: Take a look into e04_generate_address.c and e05_check_balance.c in order to generate and check addresses.
+  // e04, e05 and 06 should be combined in production code
   flex_trits_from_trytes(
       input_a.address, NUM_TRITS_ADDRESS,
       (const tryte_t *)"RJBYLCIOUKWJVCUKZQZCPIKNBUOGRGVXHRTTE9ZFSCGTFRKELMJBDDAKEYYCLHLJDNSHQ9RTIUIDLMUOB",

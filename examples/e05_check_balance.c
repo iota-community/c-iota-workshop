@@ -14,7 +14,7 @@ static tryte_t const *const ADDR_HASH =
 
 retcode_t get_balance(iota_client_service_t *service) {
     retcode_t ret_code = RC_OK;
-    flex_trit_t tmp_hash[FLEX_TRIT_SIZE_243];
+    flex_trit_t hash[FLEX_TRIT_SIZE_243];
     get_balances_req_t *balance_req = get_balances_req_new();
     get_balances_res_t *balance_res = get_balances_res_new();
 
@@ -23,12 +23,15 @@ retcode_t get_balance(iota_client_service_t *service) {
         goto done;
     }
 
-    if (flex_trits_from_trytes(tmp_hash, NUM_TRITS_HASH, ADDR_HASH, NUM_TRYTES_HASH, NUM_TRYTES_HASH) == 0) {
+    //Convert address trytes chars to trits
+    //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
+    if (flex_trits_from_trytes(hash, NUM_TRITS_HASH, ADDR_HASH, NUM_TRYTES_HASH, NUM_TRYTES_HASH) == 0) {
         printf("Error: converting flex_trit failed\n");
         goto done;
     }
 
-    if ((ret_code = hash243_queue_push(&balance_req->addresses, tmp_hash)) != RC_OK) {
+    //Add address trits to get_balances_req_t
+    if ((ret_code = hash243_queue_push(&balance_req->addresses, hash)) != RC_OK) {
         printf("Error: Adding hash to list failed!\n");
         goto done;
     }
