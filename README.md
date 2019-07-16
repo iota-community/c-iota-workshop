@@ -1,4 +1,4 @@
-#C IOTA workshop
+# C IOTA workshop
 
 **The CClient library used in this workshop is currently not designed to run on a microcontroller.
 It runs on the ESP32 though. Take a look into [this blog article](https://blog.iota.org/running-the-iota-cclient-library-on-esp32-4a1a5191afad)
@@ -6,12 +6,12 @@ for more information.**
 
 Some simple examples to get you started on developing with IOTA using C.
 
-##Getting started
+## Getting started
 
 1. [Install bazel](https://docs.bazel.build/versions/master/install.html)
 2. Run one example
 
-###How to run an example
+### How to run an example
 
 The example code is available in the ``example/`` folder.
 
@@ -37,7 +37,7 @@ You can run the hello_world example with this command
 bazel run -c opt examples:hello_world
 ```
 
-##Configuration
+## Configuration
 
 **DO NOT USE THE EXAMPLE SEEDS FOR PRODUCTION ENVIRONMENT!**
 
@@ -46,6 +46,6 @@ If you want to change the used seed or address, you need to change it
 in every example. Each example uses different addresses and seeds.
 
 
-##Contribution
+## Contribution
 
 PRs are welcome on master
