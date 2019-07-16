@@ -2,7 +2,7 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_r
 
 git_repository(
     name = "entangled",
-    commit = "652d9f672fac64171490fcae73c9fcab4def11a6",
+    commit = "3fb1892f4941735ff7a51fb9d8fc3f10f289f90f",
     remote = "https://github.com/iotaledger/entangled.git",
 )
 
