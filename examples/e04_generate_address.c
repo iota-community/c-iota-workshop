@@ -5,6 +5,8 @@
 #include "utils/time.h"
 #include <inttypes.h>
 
+#include "iota_client_service/config.h"
+
 static tryte_t const *const SEED =
         (tryte_t *)"G9JEMIRJKUXDKUPPAIMEQSGVADYLSJRSBTEIRDWSCTLCVQOJWBM9XESTWTSONOTDDQUXMYCNVAKZWPPYW";
 
