@@ -16,7 +16,7 @@ cc_binary(
     name = "send_hello",
     srcs = ["e02_send_hello.c"],
     copts = ["-DLOGGER_ENABLE"],
-    linkopts = ["-pthread"],
+    linkopts = ["-pthread", "-lm"],
     deps = [
         "//iota_client_service:config",
         "//iota_client_service:service",
@@ -68,7 +68,7 @@ cc_binary(
     name = "send_tokens",
     srcs = ["e06_send_tokens.c"],
     copts = ["-DLOGGER_ENABLE"],
-    linkopts = ["-pthread"],
+    linkopts = ["-pthread", "-lm"],
     deps = [
         "//iota_client_service:config",
         "//iota_client_service:service",
