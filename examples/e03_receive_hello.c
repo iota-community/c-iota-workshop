@@ -5,6 +5,9 @@
 #include "utils/time.h"
 #include <inttypes.h>
 
+#include "iota_client_service/config.h"
+#include "iota_client_service/client_service.h"
+
 #define FIND_BY_ADDR
 
 #define TX_INDEX 0
