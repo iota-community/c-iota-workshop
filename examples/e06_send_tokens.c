@@ -77,9 +77,7 @@ retcode_t send_balance(iota_client_service_t *s) {
         flex_trit_print(bundle_hash, NUM_TRITS_HASH);
         printf("\n");
     }
-#ifdef DEBUG
-    bundle_dump(bundle);
-#endif
+
     bundle_transactions_free(&bundle);
     transfer_message_free(&tf);
     transfer_array_free(transfers);

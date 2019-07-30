@@ -4,6 +4,8 @@
 #include "common/trinary/tryte_ascii.h"
 #include "utils/time.h"
 #include <inttypes.h>
+#include "iota_client_service/config.h"
+#include "iota_client_service/client_service.h"
 
 static tryte_t const *const SEED =
         (tryte_t *)"G9JEMIRJKUXDKUPPAIMEQSGVADYLSJRSBTEIRDWSCTLCVQOJWBM9XESTWTSONOTDDQUXMYCNVAKZWPPYW";
@@ -21,7 +23,7 @@ retcode_t get_new_address(iota_client_service_t *s) {
     //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
     if (flex_trits_from_trytes(seed, NUM_TRITS_ADDRESS, SEED, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS) == 0) {
         printf("Error: converting flex_trit failed\n");
-        return;
+        return ret;
     }
 
     if ((ret = iota_client_get_new_address(s, seed, opt, &addresses)) == RC_OK) {

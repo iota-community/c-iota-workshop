@@ -2,7 +2,7 @@
 #define C_IOTA_WORKSHOP_CONFIG_H
 
 //Todo: If needed, replace it with your node configuration
-#define CONFIG_IRI_NODE_URI "185.244.195.45"
+#define CONFIG_IRI_NODE_URI "174.141.204.79"
 #define CONFIG_IRI_NODE_PORT 14265
 
 //Todo: Comment in, if your server has TLS enabled
