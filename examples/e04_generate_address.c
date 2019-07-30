@@ -7,6 +7,8 @@
 #include "iota_client_service/config.h"
 #include "iota_client_service/client_service.h"
 
+#include "iota_client_service/config.h"
+
 static tryte_t const *const SEED =
         (tryte_t *)"G9JEMIRJKUXDKUPPAIMEQSGVADYLSJRSBTEIRDWSCTLCVQOJWBM9XESTWTSONOTDDQUXMYCNVAKZWPPYW";
 
