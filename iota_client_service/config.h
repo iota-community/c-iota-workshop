@@ -32,8 +32,8 @@
         "-----END CERTIFICATE-----\r\n"
 
 #define TIP_SELECTION_DEPTH 3
-//TESTNET => 9, PROD => 13
-#define MINIMUM_WEIGHT_MAGNITUDE 13
+//TESTNET => 9, PROD => 14
+#define MINIMUM_WEIGHT_MAGNITUDE 14
 #define DO_LOCAL_POW false
 #define SECURITY_LEVEL 2
 
