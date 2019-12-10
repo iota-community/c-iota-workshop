@@ -23,8 +23,8 @@ retcode_t get_balance(iota_client_service_t *service) {
         goto done;
     }
 
-    //Convert address trytes chars to trits
-    //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
+    //Convert the trytes to trits
+    // For more information about trits and trytes, see the IOTA documentation portal: https://docs.iota.org/docs/getting-started/0.1/introduction/ternary
     if (flex_trits_from_trytes(hash, NUM_TRITS_HASH, ADDR_HASH, NUM_TRYTES_HASH, NUM_TRYTES_HASH) == 0) {
         printf("Error: converting flex_trit failed\n");
         goto done;

@@ -25,18 +25,18 @@ retcode_t send_transaction(iota_client_service_t *service){
 
     transfer_t tf = {};
 
-    //Getting trits from address tryte chars
-    //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
+    // Convert the trytes to trits
+    // For more information about trits and trytes, see the IOTA documentation portal: https://docs.iota.org/docs/getting-started/0.1/introduction/ternary
     flex_trits_from_trytes(tf.address, NUM_TRITS_ADDRESS, RECEIVER_ADDR, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS);
 
     //Getting trits from tag chars
     flex_trits_from_trytes(tf.tag, NUM_TRITS_TAG, (const tryte_t *)TAG, NUM_TRYTES_TAG,
                            NUM_TRYTES_TAG);
 
-    //Add the ascii message to the transfer
+    //Add the ASCII message to the transfer
     transfer_message_set_string(&tf, message);
 
-    //Preparing transfer array
+    // Prepare the transfer array
     transfer_array_add(transfers, &tf);
 
     //Send transfer and setting seed = NULL, because we are sending a zero value transaction

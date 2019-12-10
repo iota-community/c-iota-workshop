@@ -26,8 +26,8 @@ retcode_t find_transaction(iota_client_service_t *s, tryte_t const *const addres
 
     flex_trit_t hash[FLEX_TRIT_SIZE_243];
 
-    //Converting address char trytes to trits
-    //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
+    // Convert the trytes to trits
+    // For more information about trits and trytes, see the IOTA documentation portal: https://docs.iota.org/docs/getting-started/0.1/introduction/ternary
     if (flex_trits_from_trytes(hash, NUM_TRITS_HASH, address, NUM_TRYTES_HASH, NUM_TRYTES_HASH) == 0) {
         printf("Error: converting flex_trit failed.\n");
         goto done;

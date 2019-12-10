@@ -21,8 +21,8 @@ retcode_t get_new_address(iota_client_service_t *s) {
     // get an unused address and all used addresses.
     address_opt_t opt = {.security = SECURITY_LEVEL, .start = 0, .total = 0};
 
-    //Get trits from seed char trytes
-    //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
+    // Convert the trytes to trits
+    // For more information about trits and trytes, see the IOTA documentation portal: https://docs.iota.org/docs/getting-started/0.1/introduction/ternary
     if (flex_trits_from_trytes(seed, NUM_TRITS_ADDRESS, SEED, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS) == 0) {
         printf("Error: converting flex_trit failed\n");
         return ret;
