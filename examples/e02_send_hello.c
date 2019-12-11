@@ -7,11 +7,7 @@
 #include "iota_client_service/client_service.h"
 
 static tryte_t const *const ADDRESS =
-(tryte_t *)"TOKLOARHKXQCVPPVVIPIJGLUTLTKFHYGMBBLOXJFYGSARLOTYFFSDZNYCOBOCNPGRMJWZCQBNOROUCE9G";
-
-static tryte_t const *const TAG =
-        (tryte_t *)"HELLOWORLD99999999999999999";
-
+(tryte_t *)"ZLGVEQ9JUZZWCZXLWVNTHBDX9G9KZTJP9VEERIIFHY9SIQKYBVAHIMLHXPQVE9IXFDDXNHQINXJDRPFDXNYVAPLZAW";
 
 retcode_t send_transaction(iota_client_service_t *service){
     retcode_t ret_code = RC_OK;
@@ -20,26 +16,24 @@ retcode_t send_transaction(iota_client_service_t *service){
 
     bundle_transactions_t *bundle = NULL;
     bundle_transactions_new(&bundle);
+    
     // Create a transfers array to which you can add transaction data
     transfer_array_t *transfers = transfer_array_new();
 
+    // Create an empty transfer object
     transfer_t tf = {};
 
     // Convert the address from trytes to trits
     // For more information about trits and trytes, see the IOTA documentation portal: https://docs.iota.org/docs/getting-started/0.1/introduction/ternary
-    flex_trits_from_trytes(tf.address, NUM_TRITS_ADDRESS, RECEIVER_ADDR, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS);
+    flex_trits_from_trytes(tf.address, NUM_TRITS_ADDRESS, ADDRESS, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS);
 
-    // Convert the tag from trytes to trits
-    flex_trits_from_trytes(tf.tag, NUM_TRITS_TAG, (const tryte_t *)TAG, NUM_TRYTES_TAG,
-                           NUM_TRYTES_TAG);
-
-    //Add the ASCII message to array
+    // Convert the ASCII message to trytes and add it to the transfer object
     transfer_message_set_string(&tf, message);
 
-    // Create a bundle from the transfers array
+    // Add the transfer object to the transfers array
     transfer_array_add(transfers, &tf);
 
-    //Send the bundle and set the seed to NULL, because you are sending a zero value transaction
+    // Create a bundle from the transfers array and send it to the node
     ret_code = iota_client_send_transfer(
             service, NULL, SECURITY_LEVEL, DEPTH,
             MINIMUM_WEIGHT_MAGNITUDE, false, transfers, NULL, NULL, NULL, bundle);

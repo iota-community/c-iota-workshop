@@ -24,7 +24,7 @@ retcode_t get_iota_node_info(iota_client_service_t *iota_client_service, get_nod
                                         node_response->latest_milestone, NUM_TRITS_HASH,
                                         NUM_TRITS_HASH);
         if (trits_count == 0) {
-            printf("trit converting failed\n");
+            printf("Failed to convert trytes to trits\n");
             goto done;
         }
         // Empty this string: we don't need it anymore

@@ -31,7 +31,7 @@
         "rqXRfboQnoZsG4q5WTP468SQvvG5\r\n" \
         "-----END CERTIFICATE-----\r\n"
 
-#define TIP_SELECTION_DEPTH 3
+#define DEPTH 3
 // Devnet => 9, Mainnet => 14
 #define MINIMUM_WEIGHT_MAGNITUDE 9
 #define SECURITY_LEVEL 2

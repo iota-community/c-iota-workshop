@@ -16,33 +16,23 @@ retcode_t get_new_address(iota_client_service_t *s) {
     retcode_t ret = RC_ERROR;
     flex_trit_t seed[FLEX_TRIT_SIZE_243];
     hash243_queue_t addresses = NULL;
-    //get five addresses.
-    // address_opt_t opt = {.security = 2, .start = 0, .total = 5};
-    // get an unused address and all used addresses.
+    // Set the options to get one new address
     address_opt_t opt = {.security = SECURITY_LEVEL, .start = 0, .total = 0};
 
-    // Convert the trytes to trits
+    // Convert the seed from trytes to trits
     // For more information about trits and trytes, see the IOTA documentation portal: https://docs.iota.org/docs/getting-started/0.1/introduction/ternary
     if (flex_trits_from_trytes(seed, NUM_TRITS_ADDRESS, SEED, NUM_TRYTES_ADDRESS, NUM_TRYTES_ADDRESS) == 0) {
-        printf("Error: converting flex_trit failed\n");
+        printf("Failed to convert trytes to trits\n");
         return ret;
     }
 
+    // Generate an unspent address with security level 2
     if ((ret = iota_client_get_new_address(s, seed, opt, &addresses)) == RC_OK) {
-        printf("unused: ");
+        printf("Your new address is: ");
         flex_trit_print(addresses->prev->hash, NUM_TRITS_ADDRESS);
         printf("\n");
-
-        size_t count = hash243_queue_count(addresses);
-        hash243_queue_t curr = addresses;
-        for (size_t i = 0; i < count; i++) {
-            printf("[%ld]: ", i);
-            flex_trit_print(curr->hash, NUM_TRITS_ADDRESS);
-            printf("\n");
-            curr = curr->next;
-        }
     } else {
-        printf("new address failed: %s\n", error_2_string(ret));
+        printf("Failed to get a new address: Error code %s\n", error_2_string(ret));
     }
     hash243_queue_free(&addresses);
 
