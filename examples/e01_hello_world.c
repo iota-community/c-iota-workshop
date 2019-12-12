@@ -24,7 +24,7 @@ retcode_t get_iota_node_info(iota_client_service_t *iota_client_service, get_nod
                                         node_response->latest_milestone, NUM_TRITS_HASH,
                                         NUM_TRITS_HASH);
         if (trits_count == 0) {
-            printf("Failed to convert trytes to trits\n");
+            printf("Failed to convert trits to trytes\n");
             goto done;
         }
         // Empty this string: we don't need it anymore
@@ -40,6 +40,12 @@ retcode_t get_iota_node_info(iota_client_service_t *iota_client_service, get_nod
         printf("packetsQueueSize %d \n", node_response->packets_queue_size);
         printf("tips %u \n", node_response->tips);
         printf("transactionsToRequest %u\n", node_response->transactions_to_request);
+        printf("features: ");
+        size_t num_features = get_node_info_req_features_len(node_res);
+        for (; num_features > 0; num_features--) {
+          printf("%s, ", get_node_info_res_features_at(node_res, num_features - 1));
+          printf("\n");
+        }
     } else {
         printf("Failed to connect to the node.");
     }
