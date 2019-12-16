@@ -5,7 +5,7 @@
 #define CONFIG_IRI_NODE_URI "nodes.devnet.thetangle.org"
 #define CONFIG_IRI_NODE_PORT 443
 
-//Todo: Comment in, if your server has TLS enabled
+//Todo: Comment out, if your server does not have TLS enabled
 #define CONFIG_ENABLE_HTTPS
 
 //Todo: If needed, replace with your valid TLS certificate
