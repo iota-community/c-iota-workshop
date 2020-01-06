@@ -9,7 +9,7 @@
 #include "iota_client_service/client_service.h"
 
 
-static tryte_t const *const ADDR_HASH =
+static tryte_t const *const ADDRESS =
         (tryte_t *)"TOKLOARHKXQCVPPVVIPIJGLUTLTKFHYGMBBLOXJFYGSARLOTYFFSDZNYCOBOCNPGRMJWZCQBNOROUCE9G";
 
 retcode_t get_balance(iota_client_service_t *service) {
@@ -23,9 +23,9 @@ retcode_t get_balance(iota_client_service_t *service) {
         goto done;
     }
 
-    //Convert address trytes chars to trits
-    //Read for more information: https://docs.iota.org/docs/iota-basics/0.1/references/tryte-alphabet
-    if (flex_trits_from_trytes(hash, NUM_TRITS_HASH, ADDR_HASH, NUM_TRYTES_HASH, NUM_TRYTES_HASH) == 0) {
+    // Convert the trytes to trits
+    // For more information about trits and trytes, see the IOTA documentation portal: https://docs.iota.org/docs/getting-started/0.1/introduction/ternary
+    if (flex_trits_from_trytes(hash, NUM_TRITS_HASH, ADDRESS, NUM_TRYTES_HASH, NUM_TRYTES_HASH) == 0) {
         printf("Error: converting flex_trit failed\n");
         goto done;
     }
@@ -36,6 +36,7 @@ retcode_t get_balance(iota_client_service_t *service) {
         goto done;
     }
 
+    // Set the threshold (this is not used but we must set it)
     balance_req->threshold = 100;
 
     if ((ret_code = iota_client_get_balances(service, balance_req, balance_res)) == RC_OK) {
@@ -48,13 +49,15 @@ retcode_t get_balance(iota_client_service_t *service) {
         printf("]\n");
 
         CDL_FOREACH(balance_res->references, q_iter) {
-            printf("reference: ");
+            printf("Milestone tail transaction hash: ");
             flex_trit_print(q_iter->hash, NUM_TRITS_HASH);
             printf("\n");
         }
     }
 
     done:
+
+    // Free the objects
     get_balances_req_free(&balance_req);
     get_balances_res_free(&balance_res);
 
@@ -68,8 +71,8 @@ int main(void){
 
     ret = get_balance(&iota_client_service);
     if(ret == RC_OK){
-        printf("Check balances done.\n");
+        printf("Check balances done\n");
     }else{
-        printf("Check balances done with error code: %i\n", ret);
+        printf("Failed to check balances: Error code: %i\n", ret);
     }
 }

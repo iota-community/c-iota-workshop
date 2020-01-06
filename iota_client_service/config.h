@@ -2,11 +2,11 @@
 #define C_IOTA_WORKSHOP_CONFIG_H
 
 //Todo: If needed, replace it with your node configuration
-#define CONFIG_IRI_NODE_URI "174.141.204.79"
-#define CONFIG_IRI_NODE_PORT 14265
+#define CONFIG_IRI_NODE_URI "nodes.devnet.thetangle.org"
+#define CONFIG_IRI_NODE_PORT 443
 
-//Todo: Comment in, if your server has TLS enabled
-//#define CONFIG_ENABLE_HTTPS
+//Todo: Comment out, if your server does not have TLS enabled
+#define CONFIG_ENABLE_HTTPS
 
 //Todo: If needed, replace with your valid TLS certificate
 #define TLS_CERTIFICATE_PEM \
@@ -31,13 +31,9 @@
         "rqXRfboQnoZsG4q5WTP468SQvvG5\r\n" \
         "-----END CERTIFICATE-----\r\n"
 
-#define TIP_SELECTION_DEPTH 3
-//TESTNET => 9, PROD => 14
-#define MINIMUM_WEIGHT_MAGNITUDE 14
-#define DO_LOCAL_POW false
+#define DEPTH 3
+// Devnet => 9, Mainnet => 14
+#define MINIMUM_WEIGHT_MAGNITUDE 9
 #define SECURITY_LEVEL 2
-
-//Comment for debugging
-#define DEBUG
 
 #endif //C_IOTA_WORKSHOP_CONFIG_H
