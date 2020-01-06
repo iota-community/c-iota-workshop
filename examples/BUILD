@@ -6,9 +6,7 @@ cc_binary(
     copts = ["-DLOGGER_ENABLE"],
     linkopts = ["-pthread"],
     deps = [
-        "//iota_client_service:config",
         "//iota_client_service:service",
-        "@entangled//cclient/api",
     ],
 )
 
@@ -18,10 +16,7 @@ cc_binary(
     copts = ["-DLOGGER_ENABLE"],
     linkopts = ["-pthread", "-lm"],
     deps = [
-        "//iota_client_service:config",
         "//iota_client_service:service",
-        "@entangled//cclient/api",
-        "@entangled//common/trinary:tryte_ascii",
     ],
 )
 
@@ -31,10 +26,7 @@ cc_binary(
     copts = ["-DLOGGER_ENABLE"],
     linkopts = ["-pthread"],
     deps = [
-        "//iota_client_service:config",
         "//iota_client_service:service",
-        "@entangled//cclient/api",
-        "@entangled//common/trinary:tryte_ascii",
     ],
 )
 
@@ -44,10 +36,7 @@ cc_binary(
     copts = ["-DLOGGER_ENABLE"],
     linkopts = ["-pthread"],
     deps = [
-        "//iota_client_service:config",
         "//iota_client_service:service",
-        "@entangled//cclient/api",
-        "@entangled//common/trinary:tryte_ascii",
     ],
 )
 
@@ -57,10 +46,7 @@ cc_binary(
     copts = ["-DLOGGER_ENABLE"],
     linkopts = ["-pthread"],
     deps = [
-        "//iota_client_service:config",
         "//iota_client_service:service",
-        "@entangled//cclient/api",
-        "@entangled//common/trinary:tryte_ascii",
     ],
 )
 
@@ -70,9 +56,6 @@ cc_binary(
     copts = ["-DLOGGER_ENABLE"],
     linkopts = ["-pthread", "-lm"],
     deps = [
-        "//iota_client_service:config",
         "//iota_client_service:service",
-        "@entangled//cclient/api",
-        "@entangled//common/trinary:tryte_ascii",
     ],
 )
