@@ -41,7 +41,7 @@ retcode_t send_balance(iota_client_service_t *s) {
     transfer_array_add(transfers, &tf);
 
     // Create a bundle from the transfers array and send it to the node
-    ret_code = iota_client_send_transfer(s, seed, SECURITY_LEVEL, TIP_SELECTION_DEPTH, MINIMUM_WEIGHT_MAGNITUDE, false, transfers, NULL, NULL, NULL, bundle);
+    ret_code = iota_client_send_transfer(s, seed, SECURITY_LEVEL, DEPTH, MINIMUM_WEIGHT_MAGNITUDE, false, transfers, NULL, NULL, NULL, bundle);
 
     printf("Sending 1 i to %s\n", RECEIVER_ADDR);
     printf("Send transfer function %s\n", error_2_string(ret_code));
