@@ -1,14 +1,20 @@
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_repository")
 
 git_repository(
-    name = "entangled",
-    commit = "3fb1892f4941735ff7a51fb9d8fc3f10f289f90f",
-    remote = "https://github.com/iotaledger/entangled.git",
+    name = "cclient",
+    commit = "ae5a638f04f68f3580eea98bfce09f9fb745cbeb",
+    remote = "https://github.com/iotaledger/iota.c.git",
+)
+
+git_repository(
+    name = "org_iota_common",
+    commit = "82818daf1ffa31b0f8a247ec51eee5cf68cb79ab",
+    remote = "https://github.com/iotaledger/iota_common.git",
 )
 
 git_repository(
     name = "rules_iota",
-    commit = "1cb59eea62fd1d071de213a9aa46e61e8273472d",
+    commit = "4fd742195c31b9e2bf859a68cd5de4b2fdba7086",
     remote = "https://github.com/iotaledger/rules_iota.git",
 )
 

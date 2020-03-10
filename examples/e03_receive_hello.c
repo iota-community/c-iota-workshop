@@ -5,8 +5,7 @@
 #include "utils/time.h"
 #include <inttypes.h>
 
-#include "iota_client_service/config.h"
-#include "iota_client_service/client_service.h"
+#include "config.h"
 
 #define FIND_BY_ADDR
 
@@ -75,11 +74,17 @@ retcode_t find_transaction(iota_client_service_t *s, tryte_t const *const addres
 }
 
 int main(void){
-    retcode_t ret = RC_ERROR;
-    iota_client_service_t iota_client_service;
-    init_iota_client(&iota_client_service);
+    iota_client_service_t *iota_client_service;
 
-    ret = find_transaction(&iota_client_service, ADDRESS);
+#ifdef CONFIG_ENABLE_HTTPS
+    iota_client_service = iota_client_core_init(CONFIG_IRI_NODE_URI, CONFIG_IRI_NODE_PORT, TLS_CERTIFICATE_PEM);
+#else
+    iota_client_service = iota_client_core_init(CONFIG_IRI_NODE_URI, CONFIG_IRI_NODE_PORT, NULL);
+#endif
+
+    retcode_t ret = RC_ERROR;
+    ret = find_transaction(iota_client_service, ADDRESS);
+
     if(ret == RC_OK){
         printf("Transaction read.\n");
     }else{

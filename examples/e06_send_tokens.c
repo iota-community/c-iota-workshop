@@ -5,8 +5,8 @@
 #include "utils/time.h"
 #include <inttypes.h>
 
-#include "iota_client_service/config.h"
-#include "iota_client_service/client_service.h"
+#include "config.h"
+
 
 static tryte_t const *const RECEIVER_ADDR =
     (tryte_t *)"RJBYLCIOUKWJVCUKZQZCPIKNBUOGRGVXHRTTE9ZFSCGTFRKELMJBDDAKEYYCLHLJDNSHQ9RTIUIDLMUOB";
@@ -59,11 +59,16 @@ retcode_t send_balance(iota_client_service_t *s) {
 }
 
 int main(void){
-    retcode_t ret = RC_ERROR;
-    iota_client_service_t iota_client_service;
-    init_iota_client(&iota_client_service);
+    iota_client_service_t *iota_client_service;
 
-    ret = send_balance(&iota_client_service);
+#ifdef CONFIG_ENABLE_HTTPS
+    iota_client_service = iota_client_core_init(CONFIG_IRI_NODE_URI, CONFIG_IRI_NODE_PORT, TLS_CERTIFICATE_PEM);
+#else
+    iota_client_service = iota_client_core_init(CONFIG_IRI_NODE_URI, CONFIG_IRI_NODE_PORT, NULL);
+#endif
+
+    retcode_t ret = RC_ERROR;
+    ret = send_balance(iota_client_service);
     if(ret == RC_OK){
         printf("Sent IOTA tokens\n");
     }else{
