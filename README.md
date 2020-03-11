@@ -6,12 +6,53 @@ for more information.**
 
 Some simple examples to get you started on developing with IOTA using C.
 
-## Getting started
+## Instructions
+To build and run these examples you can use either CMake or Bazel.
+
+### CMake
+
+1. Clone this repository
+
+```bash
+git clone https://github.com/iota-community/c-iota-workshop.git
+cd c-iota-workshop
+```
+    
+2. Create a `build` directory in which to save the compiled library
+
+```bash
+mkdir build && cd build
+```
+    
+3. Set the path in which to save the `lib` directory
+    
+```bash
+cmake -DCMAKE_INSTALL_PREFIX=$PWD ..
+```
+    
+4. Compile the code
+
+```bash
+make -j8
+```
+
+5. Execute the examples
+
+```bash
+./examples/iota_c_hello_world
+./examples/iota_c_send_hello
+./examples/iota_c_receive_hello
+./examples/iota_c_generate_address
+./examples/iota_c_check_balance
+./examples/iota_c_send_tokens
+```
+
+### Bazel
 
 1. [Install bazel](https://docs.bazel.build/versions/master/install.html)
 2. Run one example
 
-### How to run an example
+#### How to run an example
 
 The example code is available in the ``example/`` folder.
 

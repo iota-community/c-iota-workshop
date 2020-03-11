@@ -2,8 +2,7 @@
 #include "cclient/api/extended/extended_api.h"
 
 #include <inttypes.h>
-#include "iota_client_service/config.h"
-#include "iota_client_service/client_service.h"
+#include "config.h"
 
 retcode_t get_iota_node_info(iota_client_service_t *iota_client_service, get_node_info_res_t *node_response) {
     retcode_t ret = RC_ERROR;
@@ -41,7 +40,7 @@ retcode_t get_iota_node_info(iota_client_service_t *iota_client_service, get_nod
         printf("tips %u \n", node_response->tips);
         printf("transactionsToRequest %u\n", node_response->transactions_to_request);
         printf("features: ");
-        size_t num_features = get_node_info_req_features_len(node_response);
+        size_t num_features = get_node_info_req_features_num(node_response);
         for (; num_features > 0; num_features--) {
           printf("%s, ", get_node_info_res_features_at(node_response, num_features - 1));
           printf("\n");
@@ -57,11 +56,15 @@ retcode_t get_iota_node_info(iota_client_service_t *iota_client_service, get_nod
 }
 
 int main(void) {
-    // Create the client service
-    iota_client_service_t iota_client_service;
-    init_iota_client(&iota_client_service);
+    iota_client_service_t *iota_client_service;
+
+#ifdef CONFIG_ENABLE_HTTPS
+    iota_client_service = iota_client_core_init(CONFIG_IRI_NODE_URI, CONFIG_IRI_NODE_PORT, TLS_CERTIFICATE_PEM);
+#else
+    iota_client_service = iota_client_core_init(CONFIG_IRI_NODE_URI, CONFIG_IRI_NODE_PORT, NULL);
+#endif
     // Allocate a response object
     get_node_info_res_t *node_response = get_node_info_res_new();
     // Call the getNodeInfo endpoint
-    get_iota_node_info(&iota_client_service, node_response);
+    get_iota_node_info(iota_client_service, node_response);
 }
