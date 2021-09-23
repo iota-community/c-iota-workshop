@@ -1,41 +1,38 @@
 # C IOTA workshop
 
-**The CClient library used in this workshop is currently not designed to run on a microcontroller.
-It runs on the ESP32 though. Take a look into [this blog article](https://blog.iota.org/running-the-iota-cclient-library-on-esp32-4a1a5191afad)
-for more information.**
+Some simple examples to get you started on developing with IOTA 1.5(Chrysalis) using C.
 
-Some simple examples to get you started on developing with IOTA using C.
+[Chrysalis Documentation](https://chrysalis.docs.iota.org/)
+[IOTA C library documentation](https://iota-c-client.readthedocs.io/en/latest/index.html)
 
 ## Getting started
 
-1. [Install bazel](https://docs.bazel.build/versions/master/install.html)
+1. [Install CMake](https://cmake.org/install/)
 2. Run one example
+
+### building examples
+
+```
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=$PWD -DCryptoUse=mbedtls -DIOTA_TESTS=OFF -DIOTA_EXAMPLES=OFF ..
+make -j8
+```
 
 ### How to run an example
 
 The example code is available in the ``example/`` folder.
 
-You have to run the examples within bazel. Execute the following pattern in the root folder.
- 
-```bash
-bazel run -c opt examples:[EXAMPLE_NAME]
+The executable binary is in the `build` folder.
+
+```
+./build/e01_hello_world
 ```
 
 Following examples are available:
 
-```bash
-hello_world
-send_hello
-receive_hello
-generate_address
-check_balances
-send_tokens
-```
-
-You can run the hello_world example with this command
-```bash
-bazel run -c opt examples:hello_world
-```
+* e01_hello_world
+* e02_send_fetch_hello
+* e03_fetch_message
 
 ## Configuration
 
